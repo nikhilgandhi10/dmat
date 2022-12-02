@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <property name="LOG_FILE" value="C:/Dmatlogs/infoLogs/info.log"/>
+    <property name="LOG_FILE_ERROR" value="C:/Dmatlogs/ErrorLogs/error.log"/>
+
+    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+        </filter>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>C:/Dmatlogs/infoLogs/archived/app.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- each archived file, size max 5KB -->
+            <maxFileSize>10KB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20KB,
+				it will delete old archived file -->
+            <totalSizeCap>100MB</totalSizeCap>
+            <!-- 365 days to keep -->
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="FILE-ROLLING-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_ERROR}</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>C:/Dmatlogs/errorLogs/archived/app.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- each archived file, size max 5KB -->
+            <maxFileSize>2KB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20KB,
+				it will delete old archived file -->
+            <totalSizeCap>100MB</totalSizeCap>
+            <!-- 365 days to keep -->
+            <maxHistory>365</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+	
+
+	
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+
+    <root level="debug">
+        <appender-ref ref="FILE-ROLLING" />
+        <appender-ref ref="FILE-ROLLING-ERROR" />
+    </root>
+    <root level="info">
+        <appender-ref ref="CONSOLE" />
+    </root>
+    
+    
+
+
+    
+    
+    
+    
+ 
+
+    
+    
+
+</configuration>
