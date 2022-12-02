@@ -41,6 +41,7 @@ public class DownloadReportAPIController {
 		String currentDateTime = dateFormatter.format(new Date());
 		String fileName = "users_"+ currentDateTime +".xlsx";
 		List<Users> listUsers = userrepo.findAll();
+		//Print user list if with their entites.
 		for(Users list : listUsers) {
 			System.out.println(list.getBuname()+""+list.getCreatedby()+""+list.getProjectid()+""+list.getProjectname()+""
 +list.getUserid());		
